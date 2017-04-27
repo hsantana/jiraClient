@@ -499,6 +499,29 @@ public class JiraClient {
     }
     
     /**
+     * Obtains the list of all versions per project id.
+     * @return all versions; 
+     * @throws JiraException failed to obtain the versions list.
+     */
+    public List<Version> getVersions(String projectId) throws JiraException {
+        try {
+            URI uri = restclient.buildURI(Resource.getBaseUri() + "project/"+projectId+"/versions");
+            JSON response = restclient.get(uri);
+            JSONArray versionsArray = JSONArray.fromObject(response);
+
+            List<Version> versions = new ArrayList<Version>(versionsArray.size());
+            for (int i = 0; i < versionsArray.size(); i++) {
+                JSONObject p = versionsArray.getJSONObject(i);
+                versions.add(new Version(restclient, p));
+            }
+
+            return versions;
+        } catch (Exception ex) {
+            throw new JiraException(ex.getMessage(), ex);
+        }
+    }
+    
+    /**
      * Obtains the list of all issue types in Jira.
      * @return all issue types
      * @throws JiraException failed to obtain the issue type list.
