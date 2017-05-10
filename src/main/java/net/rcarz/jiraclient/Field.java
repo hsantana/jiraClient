@@ -154,6 +154,8 @@ public final class Field {
 
     public static final String DATE_FORMAT = "yyyy-MM-dd";
     public static final String DATETIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
+    public static final String DATETIME_FORMAT_Agile = "yyyy-MM-dd'T'HH:mm:ss.SSSX";
+ // "2016-08-02T14:50:33.888+02:00"
 
     private Field() { }
 
@@ -244,6 +246,30 @@ public final class Field {
         Date parsedDate = null;
         if (d instanceof String) {
             SimpleDateFormat df = new SimpleDateFormat(DATETIME_FORMAT);
+            try {
+				parsedDate = df.parse((String) d);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+            result = new Timestamp(parsedDate.getTime());
+        }
+
+        return result;
+    }
+    
+    /**
+     * Gets a timestamp from the given object.
+     *
+     * @param d a string representation of a date
+     *
+     * @return a Date instance or null if d isn't a string
+     */
+    public static Timestamp getTimestampAgile(Object d) {
+        Timestamp result = null;
+        Date parsedDate = null;
+        if (d instanceof String) {
+            SimpleDateFormat df = new SimpleDateFormat(DATETIME_FORMAT_Agile);
             try {
 				parsedDate = df.parse((String) d);
 			} catch (ParseException e) {
