@@ -545,6 +545,29 @@ public class JiraClient {
     }
     
     /**
+     * Obtains the list of all statuses in Jira.
+     * @return all statuses
+     * @throws JiraException failed to obtain the statuslist.
+     */
+    public List<Status> getStatuses() throws JiraException {
+        try {
+            URI uri = restclient.buildURI(Resource.getBaseUri() + "status");
+            JSON response = restclient.get(uri);
+            JSONArray statusArray = JSONArray.fromObject(response);
+
+            List<Status> statuses = new ArrayList<Status>(statusArray.size());
+            
+            for (int i = 0; i < statusArray.size(); i++) {
+                JSONObject s = statusArray.getJSONObject(i);
+                statuses.add(new Status(restclient, s));
+            }
+            
+            return statuses;
+        } catch (Exception ex) {
+            throw new JiraException(ex.getMessage(), ex);
+        }
+    }
+    /**
      * Creates a new component in the given project.
      *
      * @param project Key of the project to create in

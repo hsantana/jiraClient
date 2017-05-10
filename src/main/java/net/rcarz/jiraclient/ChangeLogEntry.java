@@ -21,6 +21,7 @@ package net.rcarz.jiraclient;
 
 import net.sf.json.JSONObject;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -40,7 +41,7 @@ public class ChangeLogEntry extends Resource {
     /**
      * Date when the changelog entry was created.
      */
-    private Date created = null;
+    private Timestamp created = null;
 
     /**
      * List of change log items in the change log entry.
@@ -69,7 +70,7 @@ public class ChangeLogEntry extends Resource {
 
         id = Field.getString(map.get("id"));
         author = Field.getResource(User.class, map.get("author"), restclient);
-        created = Field.getDateTime(map.get("created"));
+        created = Field.getTimestamp(map.get("created"));
         items = Field.getResourceArray(ChangeLogItem.class, map.get(
                 Field.CHANGE_LOG_ITEMS), restclient);
     }
@@ -86,7 +87,7 @@ public class ChangeLogEntry extends Resource {
      * Returns the date when the change log entry was created.
      * @return the date
      */
-    public Date getCreated() {
+    public Timestamp getCreated() {
         return created;
     }
 

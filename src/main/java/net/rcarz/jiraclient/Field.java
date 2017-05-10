@@ -22,6 +22,7 @@ package net.rcarz.jiraclient;
 import java.lang.Iterable;
 import java.lang.UnsupportedOperationException;
 import java.sql.Timestamp;
+import java.text.ParseException;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -137,6 +138,7 @@ public final class Field {
     public static final String RESOLUTION = "resolution";
     public static final String RESOLUTION_DATE = "resolutiondate";
     public static final String STATUS = "status";
+    public static final String STATUSCATEGORY = "statusCategory";
     public static final String SUBTASKS = "subtasks";
     public static final String SUMMARY = "summary";
     public static final String TIME_TRACKING = "timetracking";
@@ -230,6 +232,30 @@ public final class Field {
         return results;
     }
 
+    /**
+     * Gets a timestamp from the given object.
+     *
+     * @param d a string representation of a date
+     *
+     * @return a Date instance or null if d isn't a string
+     */
+    public static Timestamp getTimestamp(Object d) {
+        Timestamp result = null;
+        Date parsedDate = null;
+        if (d instanceof String) {
+            SimpleDateFormat df = new SimpleDateFormat(DATETIME_FORMAT);
+            try {
+				parsedDate = df.parse((String) d);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+            result = new Timestamp(parsedDate.getTime());
+        }
+
+        return result;
+    }
+    
     /**
      * Gets a date from the given object.
      *
@@ -418,6 +444,8 @@ public final class Field {
                 result = (T)new Watches(restclient, (JSONObject)r);
             else if (type == WorkLog.class)
                 result = (T)new WorkLog(restclient, (JSONObject)r);
+            else if (type == StatusCategory.class)
+                result = (T)new StatusCategory(restclient, (JSONObject)r);
         }
 
         return result;

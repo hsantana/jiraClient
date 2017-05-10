@@ -22,6 +22,7 @@ package net.rcarz.jiraclient;
 import net.sf.json.JSON;
 import net.sf.json.JSONObject;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Map;
 
@@ -33,8 +34,8 @@ public class Comment extends Resource {
     private String issueKey = null;
     private User author = null;
     private String body = null;
-    private Date created = null;
-    private Date updated = null;
+    private Timestamp created = null;
+    private Timestamp updated = null;
     private User updatedAuthor = null;
 
     /**
@@ -58,8 +59,8 @@ public class Comment extends Resource {
         id = Field.getString(map.get("id"));
         author = Field.getResource(User.class, map.get("author"), restclient);
         body = Field.getString(map.get("body"));
-        created = Field.getDateTime(map.get("created"));
-        updated = Field.getDateTime(map.get("updated"));
+        created = Field.getTimestamp(map.get("created"));
+        updated = Field.getTimestamp(map.get("updated"));
         updatedAuthor = Field.getResource(User.class, map.get("updatedAuthor"), restclient);
     }
 

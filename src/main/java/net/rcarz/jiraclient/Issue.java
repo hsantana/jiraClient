@@ -23,14 +23,17 @@ import java.io.File;
 import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.sql.Timestamp;
 import java.util.*;
+
+import org.joda.time.DateTime;
 
 import net.sf.json.JSON;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 /**
- * Represents a JIRA issue.
+ * Represents a JIRA issue./
  */
 public class Issue extends Resource {
 
@@ -555,7 +558,6 @@ public class Issue extends Resource {
             this.startAt = startAt;
         }
         
-        @Override
         public boolean hasNext() {
             if (nextIssue != null) {
                 return true;
@@ -568,7 +570,6 @@ public class Issue extends Resource {
             return nextIssue != null;
         }
 
-        @Override
         public Issue next() {
             if (! hasNext()) {
                 throw new NoSuchElementException();
@@ -578,7 +579,6 @@ public class Issue extends Resource {
             return result;
         }
 
-        @Override
         public void remove() {
             throw new UnsupportedOperationException("Method remove() not support for class " +
                                                     this.getClass().getName());
@@ -767,7 +767,7 @@ public class Issue extends Resource {
     private List<Comment> comments = null;
     private List<Component> components = null;
     private String description = null;
-    private Date dueDate = null;
+    private Timestamp dueDate = null;
     private List<Version> fixVersions = null;
     private List<IssueLink> issueLinks = null;
     private IssueType issueType = null;
@@ -777,7 +777,7 @@ public class Issue extends Resource {
     private Project project = null;
     private User reporter = null;
     private Resolution resolution = null;
-    private Date resolutionDate = null;
+    private Timestamp resolutionDate = null;
     private Status status = null;
     private List<Issue> subtasks = null;
     private String summary = null;
@@ -788,8 +788,8 @@ public class Issue extends Resource {
     private List<WorkLog> workLogs = null;
     private Integer timeEstimate = null;
     private Integer timeSpent = null;
-    private Date createdDate = null;
-    private Date updatedDate = null;
+    private Timestamp createdDate = null;
+    private Timestamp updatedDate = null;
 
     /**
      * Creates an issue from a JSON payload.
@@ -821,7 +821,7 @@ public class Issue extends Resource {
         comments = Field.getComments(fields.get(Field.COMMENT), restclient, key);
         components = Field.getResourceArray(Component.class, fields.get(Field.COMPONENTS), restclient);
         description = Field.getString(fields.get(Field.DESCRIPTION));
-        dueDate = Field.getDate(fields.get(Field.DUE_DATE));
+        dueDate = Field.getTimestamp(fields.get(Field.DUE_DATE));
         fixVersions = Field.getResourceArray(Version.class, fields.get(Field.FIX_VERSIONS), restclient);
         issueLinks = Field.getResourceArray(IssueLink.class, fields.get(Field.ISSUE_LINKS), restclient);
         issueType = Field.getResource(IssueType.class, fields.get(Field.ISSUE_TYPE), restclient);
@@ -831,7 +831,7 @@ public class Issue extends Resource {
         project = Field.getResource(Project.class, fields.get(Field.PROJECT), restclient);
         reporter = Field.getResource(User.class, fields.get(Field.REPORTER), restclient);
         resolution = Field.getResource(Resolution.class, fields.get(Field.RESOLUTION), restclient);
-        resolutionDate = Field.getDateTime(fields.get(Field.RESOLUTION_DATE));
+        resolutionDate = Field.getTimestamp(fields.get(Field.RESOLUTION_DATE));
         status = Field.getResource(Status.class, fields.get(Field.STATUS), restclient);
         subtasks = Field.getResourceArray(Issue.class, fields.get(Field.SUBTASKS), restclient);
         summary = Field.getString(fields.get(Field.SUMMARY));
@@ -842,8 +842,8 @@ public class Issue extends Resource {
         workLogs = Field.getWorkLogs(fields.get(Field.WORKLOG), restclient);
         timeEstimate = Field.getInteger(fields.get(Field.TIME_ESTIMATE));
         timeSpent = Field.getInteger(fields.get(Field.TIME_SPENT));
-        createdDate = Field.getDateTime(fields.get(Field.CREATED_DATE));
-        updatedDate = Field.getDateTime(fields.get(Field.UPDATED_DATE));
+        createdDate = Field.getTimestamp(fields.get(Field.CREATED_DATE));
+        updatedDate = Field.getTimestamp(fields.get(Field.UPDATED_DATE));
     }
 
     private static String getRestUri(String key) {
@@ -1535,7 +1535,7 @@ public class Issue extends Resource {
         return description;
     }
 
-    public Date getDueDate() {
+    public Timestamp getDueDate() {
         return dueDate;
     }
 
@@ -1589,7 +1589,7 @@ public class Issue extends Resource {
         return resolution;
     }
 
-    public Date getResolutionDate() {
+    public Timestamp getResolutionDate() {
         return resolutionDate;
     }
 
@@ -1647,11 +1647,11 @@ public class Issue extends Resource {
         return timeEstimate;
     }
 
-    public Date getCreatedDate() {
+    public Timestamp getCreatedDate() {
         return createdDate;
     }
 
-    public Date getUpdatedDate() {
+    public Timestamp getUpdatedDate() {
         return updatedDate;
     }
 

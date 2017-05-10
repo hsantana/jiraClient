@@ -19,6 +19,7 @@
 
 package net.rcarz.jiraclient;
 
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
@@ -33,10 +34,10 @@ public class WorkLog extends Resource {
 
     private User author = null;
     private String comment = null;
-    private Date created = null;
-    private Date updated = null;
+    private Timestamp created = null;
+    private Timestamp updated = null;
     private User updateAuthor = null;
-    private Date started = null;
+    private Timestamp started = null;
     private String timeSpent = null;
     private int timeSpentSeconds = 0;
 
@@ -60,10 +61,10 @@ public class WorkLog extends Resource {
         id = Field.getString(map.get("id"));
         author = Field.getResource(User.class, map.get("author"), restclient);
         comment = Field.getString(map.get("comment"));
-        created = Field.getDateTime(map.get("created"));
-        updated = Field.getDateTime(map.get("updated"));
+        created = Field.getTimestamp(map.get("created"));
+        updated = Field.getTimestamp(map.get("updated"));
         updateAuthor = Field.getResource(User.class, map.get("updateAuthor"), restclient);
-        started = Field.getDateTime(map.get("started"));
+        started = Field.getTimestamp(map.get("started"));
         timeSpent = Field.getString(map.get("timeSpent"));
         timeSpentSeconds = Field.getInteger(map.get("timeSpentSeconds"));
     }
@@ -109,7 +110,7 @@ public class WorkLog extends Resource {
         return comment;
     }
 
-    public Date getCreatedDate() {
+    public Timestamp getCreatedDate() {
         return created;
     }
 
@@ -117,11 +118,11 @@ public class WorkLog extends Resource {
         return updateAuthor;
     }
 
-    public Date getUpdatedDate() {
+    public Timestamp getUpdatedDate() {
         return updated;
     }
 
-    public Date getStarted(){ return started; }
+    public Timestamp getStarted(){ return started; }
 
     public String getTimeSpent(){ return timeSpent; }
 

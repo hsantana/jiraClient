@@ -22,6 +22,7 @@ package net.rcarz.jiraclient;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Map;
 
@@ -39,7 +40,7 @@ public class Attachment extends Resource {
 
     private User author = null;
     private String filename = null;
-    private Date created = null;
+    private Timestamp created = null;
     private int size = 0;
     private String mimeType = null;
     private String content = null;
@@ -64,7 +65,7 @@ public class Attachment extends Resource {
         id = Field.getString(map.get("id"));
         author = Field.getResource(User.class, map.get("author"), restclient);
         filename = Field.getString(map.get("filename"));
-        created = Field.getDate(map.get("created"));
+        created = Field.getTimestamp(map.get("created"));
         size = Field.getInteger(map.get("size"));
         mimeType = Field.getString(map.get("mimeType"));
         content = Field.getString(map.get("content"));
@@ -135,7 +136,7 @@ public class Attachment extends Resource {
         return author;
     }
 
-    public Date getCreatedDate() {
+    public Timestamp getCreatedDate() {
         return created;
     }
 
