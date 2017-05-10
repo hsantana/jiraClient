@@ -24,6 +24,7 @@ import net.rcarz.jiraclient.JiraException;
 import net.rcarz.jiraclient.RestClient;
 import net.sf.json.JSONObject;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -36,9 +37,9 @@ public class Sprint extends AgileResource {
 
     private String state;
     private long originBoardId;
-    private Date startDate;
-    private Date endDate;
-    private Date completeDate;
+    private Timestamp startDate;
+    private Timestamp endDate;
+    private Timestamp completeDate;
 
     /**
      * Creates a rapid view from a JSON payload.
@@ -87,9 +88,9 @@ public class Sprint extends AgileResource {
         super.deserialize(json);
         state = Field.getString(json.get("state"));
         originBoardId = getLong(json.get("originBoardId"));
-        startDate = Field.getDateTime(json.get("startDate"));
-        endDate = Field.getDateTime(json.get("endDate"));
-        completeDate = Field.getDateTime(json.get("completeDate"));
+        startDate = Field.getTimestamp(json.get("startDate"));
+        endDate = Field.getTimestamp(json.get("endDate"));
+        completeDate = Field.getTimestamp(json.get("completeDate"));
     }
 
     public String getState() {
@@ -100,15 +101,15 @@ public class Sprint extends AgileResource {
         return originBoardId;
     }
 
-    public Date getStartDate() {
+    public Timestamp getStartDate() {
         return startDate;
     }
 
-    public Date getEndDate() {
+    public Timestamp getEndDate() {
         return endDate;
     }
 
-    public Date getCompleteDate() {
+    public Timestamp getCompleteDate() {
         return completeDate;
     }
 }
