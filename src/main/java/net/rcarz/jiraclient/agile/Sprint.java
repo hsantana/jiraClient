@@ -24,7 +24,6 @@ import net.rcarz.jiraclient.JiraException;
 import net.rcarz.jiraclient.RestClient;
 import net.sf.json.JSONObject;
 
-import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -37,9 +36,9 @@ public class Sprint extends AgileResource {
 
     private String state;
     private long originBoardId;
-    private Timestamp startDate;
-    private Timestamp endDate;
-    private Timestamp completeDate;
+    private Date startDate;
+    private Date endDate;
+    private Date completeDate;
 
     /**
      * Creates a rapid view from a JSON payload.
@@ -71,7 +70,7 @@ public class Sprint extends AgileResource {
      * @return The list of sprints associated to the board.
      * @throws JiraException when the retrieval fails
      */
-    public static List<Sprint> getAll(RestClient restclient, String boardId) throws JiraException {
+    public static List<Sprint> getAll(RestClient restclient, long boardId) throws JiraException {
         return AgileResource.list(restclient, Sprint.class, RESOURCE_URI + "board/" + boardId + "/sprint");
     }
 
@@ -88,9 +87,9 @@ public class Sprint extends AgileResource {
         super.deserialize(json);
         state = Field.getString(json.get("state"));
         originBoardId = getLong(json.get("originBoardId"));
-        startDate = Field.getTimestamp(json.get("startDate"));
-        endDate = Field.getTimestamp(json.get("endDate"));
-        completeDate = Field.getTimestamp(json.get("completeDate"));
+        startDate = Field.getDateTime(json.get("startDate"));
+        endDate = Field.getDateTime(json.get("endDate"));
+        completeDate = Field.getDateTime(json.get("completeDate"));
     }
 
     public String getState() {
@@ -101,15 +100,15 @@ public class Sprint extends AgileResource {
         return originBoardId;
     }
 
-    public Timestamp getStartDate() {
+    public Date getStartDate() {
         return startDate;
     }
 
-    public Timestamp getEndDate() {
+    public Date getEndDate() {
         return endDate;
     }
 
-    public Timestamp getCompleteDate() {
+    public Date getCompleteDate() {
         return completeDate;
     }
 }
