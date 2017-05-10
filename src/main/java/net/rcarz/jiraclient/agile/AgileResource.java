@@ -46,7 +46,7 @@ public abstract class AgileResource {
     public static final String RESOURCE_URI = "/rest/agile/1.0/";
 
     private RestClient restclient = null;
-    private long id = 0;
+    private String id;
     private String name;
     private String self;
     private JSONObject attributes = new JSONObject();
@@ -235,7 +235,7 @@ public abstract class AgileResource {
     /**
      * @return Internal JIRA ID.
      */
-    public long getId() {
+    public String getId() {
         return id;
     }
 
@@ -285,7 +285,7 @@ public abstract class AgileResource {
      */
     void deserialize(JSONObject json) throws JiraException {
 
-        id = getLong(json.get("id"));
+        id = Field.getString(json.get("id"));
         name = Field.getString(json.get("name"));
         self = Field.getString(json.get("self"));
         addAttributes(json);
