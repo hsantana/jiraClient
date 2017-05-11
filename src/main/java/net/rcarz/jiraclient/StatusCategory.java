@@ -31,7 +31,7 @@ public class StatusCategory extends Resource {
         Map map = json;
 
         self = Field.getString(map.get("self"));
-        id = Field.getString(map.get("id"));
+        id = String.valueOf(map.get("id"));
         key = Field.getString(map.get("key"));
         colorName = Field.getString(map.get("colorName"));
         name = Field.getString(map.get("name"));
